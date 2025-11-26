@@ -411,6 +411,86 @@
             margin-top: 1rem;
         }
 
+        /* Guide Section */
+        .guide-section {
+            padding: 100px 0;
+            background: var(--background);
+            position: relative;
+        }
+
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .guide-step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .guide-step:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+
+        .guide-step h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .guide-step p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
         /* Success Message */
         .success-message {
             position: fixed;
@@ -714,7 +794,16 @@
                 gap: 1.5rem;
             }
 
+            .guide-steps {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
             .feature-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .guide-step {
                 padding: 2rem 1.5rem;
             }
 
@@ -755,6 +844,10 @@
             }
 
             .feature-card {
+                padding: 1.5rem;
+            }
+
+            .guide-step {
                 padding: 1.5rem;
             }
 
@@ -801,6 +894,7 @@
                 <nav>
                     <ul>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="#guide">Guide</a></li>
                         <li><a href="#contact-section">Contact</a></li>
                     </ul>
                 </nav>
@@ -935,6 +1029,50 @@
         </div>
     </section>
 
+    <!-- Guide Section -->
+    <section class="guide-section" id="guide">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">How to Get Started</h2>
+                <p class="section-subtitle fade-in">Follow these simple steps to access our premium Telegram bot</p>
+            </div>
+            <div class="guide-steps">
+                <div class="guide-step fade-in">
+                    <div class="step-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="step-number">1</div>
+                    <h3>Open Telegram</h3>
+                    <p>Launch the Telegram app on your mobile device or desktop</p>
+                </div>
+                <div class="guide-step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="step-number">2</div>
+                    <h3>Find Our Bot</h3>
+                    <p>Search for our official Telegram bot in the search bar</p>
+                </div>
+                <div class="guide-step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="step-number">3</div>
+                    <h3>Start Conversation</h3>
+                    <p>Click "Start" to begin interacting with our premium service bot</p>
+                </div>
+                <div class="guide-step fade-in">
+                    <div class="step-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="step-number">4</div>
+                    <h3>Add to Home Screen</h3>
+                    <p>Pin the bot to your home screen for quick access anytime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta">
         <div class="container">
@@ -969,7 +1107,7 @@
                 <div class="footer-column">
                     <h3>Support</h3>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#guide">Guide</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
                         <li><a href="#contact-section">Contact Us</a></li>
