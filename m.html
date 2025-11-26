@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muji™ - Premium Escort Service</title>
+    <title>Muzo - Premium Escort Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         :root {
@@ -34,19 +34,81 @@
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            font-weight: 300;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
         }
 
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Анимации появления */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .city-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.7)),
+                url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            opacity: 0.3;
+            filter: blur(2px) brightness(0.6);
         }
 
         /* Header */
         header {
             background-color: rgba(15, 15, 15, 0.95);
-            padding: 1.2rem 0;
+            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -62,26 +124,28 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             color: var(--text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: logoGradient 3s ease infinite;
         }
 
-        .logo span {
-            color: var(--primary);
-        }
-
-        .logo-badge {
-            background: var(--primary);
-            color: var(--text);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
+        @keyframes logoGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         nav ul {
@@ -93,13 +157,29 @@
         nav ul li a {
             color: var(--text);
             text-decoration: none;
-            font-weight: 400;
+            font-weight: 500;
             transition: all 0.3s;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
+            position: relative;
         }
 
         nav ul li a:hover {
             color: var(--primary);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
         }
 
         .header-actions {
@@ -114,44 +194,79 @@
             gap: 8px;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--text);
-            padding: 10px 24px;
-            border-radius: 6px;
+            padding: 12px 28px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            border-radius: 30px;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
         }
 
-        .btn-outline {
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            border-radius: 50%;
+        }
+
+        .btn-glow:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-secondary {
             background: transparent;
             border: 1px solid var(--primary);
             color: var(--text);
         }
 
-        .btn-outline:hover {
+        .btn-secondary:hover {
             background: rgba(255, 107, 157, 0.1);
             transform: translateY(-2px);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text);
         }
 
         /* Hero Section */
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--background) 0%, var(--surface) 100%);
             display: flex;
             align-items: center;
             position: relative;
@@ -159,57 +274,51 @@
             padding: 120px 0 80px;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
-        }
-
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 650px;
+            text-align: center;
+            margin: 0 auto;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 107, 157, 0.1);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+        .premium-text {
+            font-size: 1.1rem;
+            font-weight: 600;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 107, 157, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
             line-height: 1.7;
         }
 
-        .hero-stats {
+        .hero-actions {
             display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -217,25 +326,124 @@
         .stat {
             display: flex;
             flex-direction: column;
+            text-align: center;
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: clamp(2rem, 4vw, 2.5rem);
             font-weight: 700;
             color: var(--primary);
             line-height: 1;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-top: 0.5rem;
+        }
+
+        /* Contact Form Section */
+        .contact-section {
+            padding: 80px 0;
+            background: var(--surface);
+            position: relative;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .optional {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-left: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: none; /* Убираем ползунок изменения размера */
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+            background: linear-gradient(135deg, #ffffff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 107, 157, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            transition: transform 0.5s ease;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .success-message.show {
+            transform: translateX(-50%) translateY(0);
         }
 
         /* Features Section */
         .features {
             padding: 100px 0;
             background: var(--surface);
+            position: relative;
         }
 
         .section-header {
@@ -244,7 +452,7 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 2.5rem);
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text);
@@ -259,18 +467,19 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
         .feature-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 2.5rem 2rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .feature-card::before {
@@ -279,7 +488,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
+            height: 3px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             transform: scaleX(0);
             transition: transform 0.3s ease;
@@ -290,22 +499,28 @@
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.2);
         }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 107, 157, 0.1);
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(102, 126, 234, 0.1));
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(102, 126, 234, 0.2));
         }
 
         .feature-card h3 {
@@ -320,6 +535,30 @@
             line-height: 1.6;
         }
 
+        /* Interactive glow effect for feature cards */
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-glow {
+            position: absolute;
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .feature-card:hover .feature-glow {
+            width: 400px;
+            height: 400px;
+        }
+
         /* CTA Section */
         .cta {
             padding: 100px 0;
@@ -327,24 +566,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-
-        .cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle, rgba(255, 107, 157, 0.05) 0%, transparent 70%),
-                radial-gradient(circle, rgba(102, 126, 234, 0.05) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
         }
 
         .cta-content {
@@ -355,7 +576,7 @@
         }
 
         .cta h2 {
-            font-size: 2.8rem;
+            font-size: clamp(2rem, 4vw, 2.8rem);
             font-weight: 700;
             margin-bottom: 1.5rem;
             color: var(--text);
@@ -369,8 +590,9 @@
         }
 
         .btn-large {
-            padding: 15px 40px;
+            padding: 16px 45px;
             font-size: 1.1rem;
+            font-weight: 600;
         }
 
         /* Footer */
@@ -382,7 +604,7 @@
 
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 3rem;
             margin-bottom: 3rem;
         }
@@ -441,6 +663,7 @@
             color: var(--text);
             transition: all 0.3s;
             border: 1px solid var(--border);
+            text-decoration: none;
         }
 
         .social-links a:hover {
@@ -458,94 +681,135 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-            
-            .hero h1 {
-                font-size: 3rem;
-            }
-        }
-
+        /* Mobile Optimization */
         @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+
             nav ul {
-                display: none;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .header-actions {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-stats {
-                flex-direction: column;
                 gap: 1.5rem;
             }
-            
-            .section-title {
-                font-size: 2rem;
+
+            nav ul li a {
+                font-size: 1rem;
             }
-            
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                text-align: center;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .header-actions {
+                display: none;
             }
         }
 
         @media (max-width: 480px) {
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav ul li a {
+                font-size: 0.9rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                width: 100%;
+                padding: 0 15px;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .cta h2 {
-                font-size: 2rem;
-            }
-            
-            .feature-card {
-                padding: 2rem 1.5rem;
+
+            .section-title {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="city-background"></div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="success-message">
+        <i class="fas fa-check-circle"></i> Thank you! We will contact you within 24 hours. If you don't receive a message, please check your Spam folder.
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">
-                    Muji<span>™</span>
-                    <span class="logo-badge">PREMIUM</span>
+                    Muzo
                 </a>
                 <nav>
                     <ul>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#premium">Premium</a></li>
-                        <li><a href="#reviews">Reviews</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#contact-section">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="header-actions">
-                    <a href="#" class="btn-outline">Sign In</a>
-                    <a href="https://t.me/muji_premium" class="btn" target="_blank">
+                    <a href="https://t.me/montserrat_premium" class="btn" target="_blank">
                         <i class="fab fa-telegram"></i> Join Telegram
                     </a>
-                </div>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
@@ -555,28 +819,30 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-star"></i>
+                <div class="premium-text fade-in">
                     PREMIUM ESCORT SERVICE
                 </div>
-                <h1>Exclusive Companion Experiences Redefined</h1>
-                <p>Muji™ offers unparalleled access to premium escorts with verified profiles, discrete service, and exceptional quality. Join our exclusive community today.</p>
+                <h1 class="fade-in">Exclusive Companion Experiences Redefined</h1>
+                <p class="fade-in">Muzo offers unparalleled access to premium escorts with verified profiles, discrete service, and exceptional quality. Join our exclusive community today.</p>
                 <div class="hero-actions">
-                    <a href="https://t.me/muji_premium" class="btn btn-large" target="_blank">
-                        <i class="fab fa-telegram"></i> Join Telegram Channel
+                    <a href="https://t.me/montserrat_premium" class="btn btn-large btn-glow fade-in" target="_blank">
+                        <i class="fab fa-telegram"></i> Join Telegram
+                    </a>
+                    <a href="#contact-section" class="btn btn-large btn-secondary btn-glow fade-in">
+                        <i class="fas fa-envelope"></i> Contact Us
                     </a>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-number">5,000+</div>
-                        <div class="stat-label">Premium Profiles</div>
+                    <div class="stat fade-in">
+                        <div class="stat-number" data-target="5000">+0</div>
+                        <div class="stat-label">Satisfied Customers</div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Verified Photos</div>
+                    <div class="stat fade-in">
+                        <div class="stat-number" data-target="100">0%</div>
+                        <div class="stat-label">Privacy</div>
                     </div>
-                    <div class="stat">
-                        <div class="stat-number">24/7</div>
+                    <div class="stat fade-in">
+                        <div class="stat-number" data-target="24">24/7</div>
                         <div class="stat-label">Discrete Service</div>
                     </div>
                 </div>
@@ -588,46 +854,52 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Why Choose Muji™</h2>
-                <p class="section-subtitle">Experience the difference with our premium service features</p>
+                <h2 class="section-title fade-in">Why Choose Muzo</h2>
+                <p class="section-subtitle fade-in">Experience the difference with our premium service features</p>
             </div>
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Verified Authenticity</h3>
                     <p>Every profile undergoes rigorous verification to ensure complete authenticity and reliability.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-user-check"></i>
                     </div>
                     <h3>Premium Selection</h3>
                     <p>Access to exclusive, high-quality companions carefully selected for exceptional experiences.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-lock"></i>
                     </div>
                     <h3>Complete Discretion</h3>
                     <p>Your privacy is our priority with secure, confidential interactions guaranteed.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-clock"></i>
                     </div>
                     <h3>24/7 Availability</h3>
                     <p>Round-the-clock service ensuring you can connect whenever you need.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-star"></i>
                     </div>
                     <h3>Elite Quality</h3>
                     <p>Only the highest standard of service and professionalism for our clients.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-glow"></div>
                     <div class="feature-icon">
                         <i class="fas fa-globe"></i>
                     </div>
@@ -638,14 +910,44 @@
         </div>
     </section>
 
+    <!-- Contact Form Section -->
+    <section class="contact-section" id="contact-section">
+        <div class="container">
+            <div class="contact-container">
+                <h2 class="section-title fade-in">Contact Us</h2>
+                <p class="section-subtitle fade-in">Get in touch with us for any inquiries</p>
+                
+                <div class="contact-form">
+                    <form id="email-form">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-input" placeholder="Enter your city">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message <span class="optional">(optional)</span></label>
+                            <textarea id="message" class="form-input" rows="3" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-large submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
-    <section class="cta" id="contact">
+    <section class="cta">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready for Exclusive Experiences?</h2>
-                <p>Join our Telegram channel to access premium companions, verified profiles, and discrete service. Your exclusive journey begins here.</p>
-                <a href="https://t.me/muji_premium" class="btn btn-large" target="_blank">
-                    <i class="fab fa-telegram"></i> Join Telegram Channel
+                <h2 class="fade-in">Ready for Exclusive Experiences?</h2>
+                <p class="fade-in">Join our Telegram channel to access premium companions, verified profiles, and discrete service. Your exclusive journey begins here.</p>
+                <a href="https://t.me/montserrat_premium" class="btn btn-large btn-glow fade-in" target="_blank">
+                    <i class="fab fa-telegram"></i> Join Telegram
                 </a>
             </div>
         </div>
@@ -657,23 +959,17 @@
             <div class="footer-content">
                 <div class="footer-column footer-info">
                     <a href="#" class="logo">
-                        Muji<span>™</span>
+                        Muzo
                     </a>
                     <p>Premium escort service offering exclusive companion experiences with verified profiles and complete discretion.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://t.me/montserrat_premium" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="mailto:contact@muzo.com">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                     </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Service</h3>
-                    <ul>
-                        <li><a href="#">Premium Escorts</a></li>
-                        <li><a href="#">Verified Profiles</a></li>
-                        <li><a href="#">Global Network</a></li>
-                        <li><a href="#">Discrete Service</a></li>
-                    </ul>
                 </div>
                 <div class="footer-column">
                     <h3>Support</h3>
@@ -681,74 +977,162 @@
                         <li><a href="#">Help Center</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                         <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Partners</a></li>
+                        <li><a href="#contact-section">Contact Us</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Muji™. All rights reserved. | Premium Escort Service</p>
+                <p>&copy; 2023 Muzo. All rights reserved. | Premium Escort Service</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu functionality
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const nav = document.querySelector('nav ul');
-        const headerActions = document.querySelector('.header-actions');
-        
-        mobileMenu.addEventListener('click', () => {
-            const isVisible = nav.style.display === 'flex';
-            nav.style.display = isVisible ? 'none' : 'flex';
-            if (headerActions) {
-                headerActions.style.display = isVisible ? 'none' : 'flex';
-            }
-            
-            if (!isVisible) {
-                nav.style.flexDirection = 'column';
-                nav.style.position = 'absolute';
-                nav.style.top = '100%';
-                nav.style.left = '0';
-                nav.style.right = '0';
-                nav.style.background = 'var(--surface)';
-                nav.style.padding = '2rem';
-                nav.style.borderTop = '1px solid var(--border)';
-                nav.style.gap = '1.5rem';
-                
-                if (headerActions) {
-                    headerActions.style.flexDirection = 'column';
-                    headerActions.style.position = 'absolute';
-                    headerActions.style.top = 'calc(100% + 200px)';
-                    headerActions.style.left = '0';
-                    headerActions.style.right = '0';
-                    headerActions.style.background = 'var(--surface)';
-                    headerActions.style.padding = '2rem';
-                    headerActions.style.borderTop = '1px solid var(--border)';
-                    headerActions.style.gap = '1rem';
+        // Анимация счетчиков
+        function animateCounter(element, target, duration = 1000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    if (target === 100) {
+                        element.textContent = '100%';
+                    } else if (target === 24) {
+                        element.textContent = '24/7';
+                    } else {
+                        element.textContent = '+' + target.toLocaleString();
+                    }
+                    clearInterval(timer);
+                } else {
+                    if (target === 100) {
+                        element.textContent = Math.floor(start) + '%';
+                    } else if (target === 24) {
+                        element.textContent = '24/7';
+                    } else {
+                        element.textContent = '+' + Math.floor(start).toLocaleString();
+                    }
                 }
-            }
+            }, 16);
+        }
+
+        // Intersection Observer для анимаций при прокрутке
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Анимация счетчиков для статистики
+                    if (entry.target.classList.contains('stat-number')) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        setTimeout(() => animateCounter(entry.target, target), 200);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за всеми элементами с анимациями
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .stat-number').forEach(el => {
+            observer.observe(el);
         });
 
-        // Close mobile menu when clicking on links
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    nav.style.display = 'none';
-                    if (headerActions) {
-                        headerActions.style.display = 'none';
+        // Interactive glow effect for buttons
+        document.querySelectorAll('.btn-glow').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                btn.style.setProperty('--x', `${x}px`);
+                btn.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Interactive glow effect for feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const glow = card.querySelector('.feature-glow');
+                glow.style.setProperty('--x', `${x}px`);
+                glow.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Form submission
+        const emailForm = document.getElementById('email-form');
+        const successMessage = document.getElementById('success-message');
+
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const city = document.getElementById('city').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to your backend
+            console.log('Email:', email);
+            console.log('City:', city);
+            console.log('Message:', message);
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+            
+            // Reset form
+            emailForm.reset();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a, .btn-secondary').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 }
             });
         });
+
+        // Mobile menu toggle (для будущей реализации)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Свайп влево
+                console.log('Swiped left');
+            }
+            if (touchEndX > touchStartX + 50) {
+                // Свайп вправо
+                console.log('Swiped right');
+            }
+        }
     </script>
 </body>
 </html>
