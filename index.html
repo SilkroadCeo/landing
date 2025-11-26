@@ -96,13 +96,14 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(rgba(15, 15, 15, 0.9), rgba(15, 15, 15, 0.7)),
-                url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+                linear-gradient(rgba(15, 15, 15, 0.85), rgba(15, 15, 15, 0.75)),
+                url('IMG_7937.gif');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             background-blend-mode: overlay;
-            opacity: 0.3;
-            filter: blur(2px) brightness(0.6);
+            opacity: 0.4;
+            filter: blur(1px) brightness(0.7);
         }
 
         /* Header */
@@ -282,15 +283,6 @@
             margin: 0 auto;
         }
 
-        .premium-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 50%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .hero h1 {
             font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
@@ -396,7 +388,8 @@
             color: var(--text);
             font-size: 1rem;
             transition: all 0.3s ease;
-            resize: none; /* Убираем ползунок изменения размера */
+            resize: none;
+            font-family: inherit;
         }
 
         .form-input::placeholder {
@@ -404,6 +397,7 @@
             background: linear-gradient(135deg, #ffffff 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-family: inherit;
         }
 
         .form-input:focus {
@@ -433,10 +427,14 @@
             max-width: 500px;
             width: 90%;
             text-align: center;
+            opacity: 0;
+            visibility: hidden;
         }
 
         .success-message.show {
             transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Features Section */
@@ -819,9 +817,6 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="premium-text fade-in">
-                    PREMIUM ESCORT SERVICE
-                </div>
                 <h1 class="fade-in">Exclusive Companion Experiences Redefined</h1>
                 <p class="fade-in">Muzo offers unparalleled access to premium escorts with verified profiles, discrete service, and exceptional quality. Join our exclusive community today.</p>
                 <div class="hero-actions">
@@ -839,7 +834,7 @@
                     </div>
                     <div class="stat fade-in">
                         <div class="stat-number" data-target="100">0%</div>
-                        <div class="stat-label">Privacy</div>
+                        <div class="stat-label">Anonymous Dating</div>
                     </div>
                     <div class="stat fade-in">
                         <div class="stat-number" data-target="24">24/7</div>
@@ -932,7 +927,7 @@
                             <textarea id="message" class="form-input" rows="3" placeholder="Enter your message"></textarea>
                         </div>
                         <button type="submit" class="btn btn-large submit-btn">
-                            <i class="fas fa-paper-plane"></i> Send Message
+                            <i class="fas fa-envelope"></i> Send Message
                         </button>
                     </form>
                 </div>
